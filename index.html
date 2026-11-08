@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Анастасия Зырянова — подбор новостроек</title>
+<style>body{margin:0;background:#171715}#az-opening {
+  --az-bg: #171715;
+  --az-panel: #201f1b;
+  --az-gold: #d9b781;
+  --az-text: #f5efe6;
+  --az-muted: #c6beb2;
+  --az-line: #554a3a;
+  background: var(--az-bg);
+  color: var(--az-text);
+  font: 16px/1.55 system-ui, sans-serif;
+  isolation: isolate;
+}
+#az-opening .az-top, #az-opening .az-hero, #az-opening .az-approach {
+  width: min(100% - 96px, 1240px);
+  margin-inline: auto;
+}
+#az-opening .az-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 96px;
+  border-bottom: 1px solid var(--az-line);
+}
+#az-opening .az-brand { display: flex; gap: 16px; align-items: center; line-height: 1.25; }
+#az-opening .az-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--az-line);
+  color: var(--az-gold);
+  font: 22px Georgia, serif;
+}
+#az-opening .az-brand small, #az-opening figcaption small {
+  display: block;
+  margin-top: 6px;
+  font: 10px/1.3 system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .19em;
+  color: var(--az-gold);
+}
+#az-opening .az-top-link { color: var(--az-text); font-size: 14px; text-decoration: none; }
+#az-opening .az-top-link span { color: var(--az-gold); margin-left: 8px; }
+#az-opening .az-hero {
+  display: grid;
+  grid-template-columns: 1.03fr 1fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 100px);
+  padding: 46px 0 72px;
+}
+#az-opening .az-hero-copy { padding-block: 20px; }
+#az-opening .az-kicker {
+  color: var(--az-gold);
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .22em;
+  margin: 0 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#az-opening .az-kicker span { width: 30px; height: 1px; background: currentColor; }
+#az-opening h1, #az-opening h2 {
+  margin: 0;
+  color: var(--az-text);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  line-height: .99;
+  letter-spacing: -.045em;
+}
+#az-opening h1 { font-size: clamp(51px, 6.4vw, 96px); }
+#az-opening h2 { font-size: clamp(46px, 5.2vw, 77px); }
+#az-opening em { color: var(--az-gold); font-weight: 400; }
+#az-opening .az-lead { max-width: 43ch; margin: 26px 0; color: var(--az-muted); font-size: clamp(16px, 1.45vw, 19px); }
+#az-opening .az-button {
+  display: inline-flex;
+  gap: 24px;
+  align-items: center;
+  padding: 14px 21px;
+  background: var(--az-gold);
+  color: #1d1812;
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+#az-opening .az-button:hover { background: #ebc895; }
+#az-opening a:focus-visible { outline: 2px solid var(--az-gold); outline-offset: 5px; }
+#az-opening figure { position: relative; margin: 0; overflow: hidden; background: var(--az-panel); }
+#az-opening .az-hero-photo { aspect-ratio: .89; }
+#az-opening img { display: block; width: 100%; height: 100%; object-fit: cover; }
+#az-opening .az-hero-photo img { object-position: 49% 37%; }
+#az-opening figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 48px 24px 22px;
+  background: linear-gradient(transparent, #17130ff2);
+  color: var(--az-text);
+  font: 22px Georgia, serif;
+}
+#az-opening .az-approach {
+  display: grid;
+  grid-template-columns: .83fr 1fr;
+  align-items: center;
+  gap: clamp(40px, 7vw, 110px);
+  padding: 76px 0 92px;
+  border-top: 1px solid var(--az-line);
+  scroll-margin-top: 24px;
+}
+#az-opening .az-work-photo { aspect-ratio: .8; }
+#az-opening .az-work-photo img { object-position: 65% 43%; }
+#az-opening .az-steps { list-style: none; padding: 0; margin: 28px 0 0; }
+#az-opening .az-steps li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  padding: 15px 0;
+  border-top: 1px solid var(--az-line);
+}
+#az-opening .az-steps li > span { color: var(--az-gold); font-size: 12px; padding-top: 4px; }
+#az-opening .az-steps h3 { font-size: 17px; line-height: 1.3; margin: 0 0 5px; color: var(--az-text); }
+#az-opening .az-steps p { font-size: 14px; color: var(--az-muted); margin: 0; }
+@media (max-width: 780px) {
+  #az-opening .az-top, #az-opening .az-hero, #az-opening .az-approach { width: min(100% - 44px, 600px); }
+  #az-opening .az-top { min-height: 72px; }
+  #az-opening .az-brand { gap: 10px; font-size: 13px; }
+  #az-opening .az-mark { width: 36px; height: 36px; font-size: 18px; }
+  #az-opening .az-top-link { font-size: 11px; text-align: right; }
+  #az-opening .az-hero, #az-opening .az-approach { grid-template-columns: 1fr; gap: 26px; padding: 36px 0 52px; }
+  #az-opening .az-hero-copy { padding: 0; }
+  #az-opening h1 { font-size: clamp(43px, 10vw, 68px); }
+  #az-opening h2 { font-size: clamp(40px, 9vw, 57px); }
+  #az-opening .az-kicker { margin-bottom: 18px; }
+  #az-opening .az-lead { margin: 20px 0; }
+  #az-opening .az-desktop { display: none; }
+  #az-opening .az-hero-photo { aspect-ratio: .95; }
+  #az-opening .az-work-photo { grid-row: 2; aspect-ratio: 1.1; }
+}
+</style></head><body>
+<div id="az-opening">
+  <div class="az-top">
+    <div class="az-brand"><span class="az-mark" aria-hidden="true">АЗ</span><span>Анастасия Зырянова<small>Недвижимость</small></span></div>
+    <a class="az-top-link" href="#az-approach">Как я работаю <span aria-hidden="true">↘</span></a>
+  </div>
+  <section class="az-hero" aria-labelledby="az-title">
+    <div class="az-hero-copy">
+      <p class="az-kicker"><span></span> Подбор новостроек</p>
+      <h1 id="az-title">Квартира для<br>вашей <em>новой<br class="az-desktop"> истории</em></h1>
+      <p class="az-lead">Помогу выбрать квартиру в новостройке, разобраться с ипотекой и пройти путь от первого просмотра до сделки.</p>
+      <a class="az-button" href="#az-approach">Как проходит подбор <span aria-hidden="true">↓</span></a>
+    </div>
+    <figure class="az-hero-photo">
+      <img src="anastasia-cover.webp" alt="Анастасия Зырянова на фоне современного жилого здания" width="1140" height="1520" fetchpriority="high">
+      <figcaption><span>Анастасия Зырянова</span><small>Риелтор</small></figcaption>
+    </figure>
+  </section>
+  <section class="az-approach" id="az-approach" aria-labelledby="az-approach-title">
+    <figure class="az-work-photo">
+      <img src="anastasia-at-work.webp" alt="Анастасия у макета жилого комплекса" width="960" height="1280" loading="lazy">
+    </figure>
+    <div class="az-approach-copy">
+      <p class="az-kicker"><span></span> Знакомство</p>
+      <h2 id="az-approach-title">Я Анастасия,<br><em>ваш риелтор</em></h2>
+      <p class="az-lead">Начинаю с разговора о том, как вы хотите жить. Так мы поймём, какой район, планировка и бюджет подойдут именно вам.</p>
+      <ol class="az-steps">
+        <li><span>01</span><div><h3>Подбор квартиры</h3><p>Сравним новостройки по району, планировкам и условиям покупки. Выберем, какие стоит посмотреть.</p></div></li>
+        <li><span>02</span><div><h3>Помощь с ипотекой</h3><p>Разберём первоначальный взнос, срок и ежемесячный платёж, чтобы понять, какая нагрузка вам подходит.</p></div></li>
+        <li><span>03</span><div><h3>Сопровождение сделки</h3><p>Объясню, какие документы понадобятся и что будет происходить на каждом этапе покупки.</p></div></li>
+      </ol>
+    </div>
+  </section>
+</div>
+</body></html>
