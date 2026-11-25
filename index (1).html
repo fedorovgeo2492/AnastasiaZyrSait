@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Ипотечный калькулятор · Анастасия Зырянова</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+#mc-app{--bg:#03201f;--surface:#07302e;--surface-2:#0c3f3b;--text:#f3ede0;--muted:#a3bcb6;--gold:#d4a65a;--gold-2:#e8c987;--on-gold:#052321;--line:#1c524c;
+  font-family:'Onest',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--text);background:var(--bg);color-scheme:dark;font-size:17px;line-height:1.55;text-align:left}
+#mc-app *{box-sizing:border-box}
+:where(#mc-app) :where(h1,h2,p){margin:0;padding:0}
+:where(#mc-app) a{color:inherit}
+#mc-app [hidden]{display:none!important}
+#mc-app img{display:block}
+.mc-wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.mc-h2{font-size:clamp(30px,4vw,46px);line-height:1.1;font-weight:700;letter-spacing:-.02em;margin-bottom:16px}
+.mc-lead{color:var(--muted);max-width:60ch;margin-bottom:40px}
+.mc-btn{display:block;font:inherit;font-weight:600;font-size:17px;text-decoration:none;cursor:pointer;border:2px solid var(--gold);background:var(--gold);color:var(--on-gold);border-radius:12px;padding:15px 26px;text-align:center}
+.mc-btn:hover{background:var(--gold-2);border-color:var(--gold-2)}
+.mc-btn:disabled{opacity:.6;cursor:default}
+.mc-btn--ghost{background:transparent;color:var(--gold)}
+.mc-btn--ghost:hover{background:var(--gold);color:var(--on-gold)}
+#mc-app :focus-visible{outline:3px solid var(--gold-2);outline-offset:3px}
+.mc-sum b{white-space:nowrap}
+/* Калькулятор */
+.mc-calc{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:start}
+.mc-field{margin-bottom:26px}
+.mc-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
+.mc-row label{font-size:15px;color:var(--muted)}
+.mc-row small{font-size:14px;color:var(--muted)}
+.mc-in{width:100%;font:inherit;font-size:20px;font-weight:600;color:var(--text);background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:12px 16px;outline:none}
+.mc-in::placeholder{color:#6f9089}
+.mc-in:focus{border-color:var(--gold)}
+#mc-app input[type=range]{width:100%;margin:12px 0 0;accent-color:var(--gold);height:28px}
+.mc-res{background:var(--surface-2);border:1px solid var(--gold);border-radius:24px;padding:32px;position:sticky;top:92px}
+.mc-res .l{font-size:15px;color:var(--muted)}
+.mc-pay{font-size:clamp(34px,4.5vw,48px);font-weight:700;line-height:1.1;margin:6px 0 22px;letter-spacing:-.02em;color:var(--gold-2)}
+.mc-bar{height:10px;border-radius:6px;background:#3f6d64;overflow:hidden;margin-bottom:10px}
+.mc-bar i{display:block;height:100%;background:var(--gold);width:70%;transition:width .25s}
+.mc-leg{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:20px}
+.mc-sum{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.mc-res .mc-btn{width:100%;margin-top:20px}
+.mc-note{font-size:13px;color:var(--muted);margin-top:24px;max-width:80ch}
+.mc-bnd{display:flex;justify-content:space-between;gap:8px;margin-top:4px;font-size:13px;color:var(--muted)}
+.mc-prog{padding-top:24px;border-top:1px solid var(--line)}
+.mc-prog-t{font-size:15px;color:var(--muted);margin-bottom:12px}
+.mc-chips{display:flex;flex-wrap:wrap;gap:8px}
+.mc-sub{margin-top:12px}
+.mc-chips label{position:relative;flex:1 1 auto}
+.mc-chips input{position:absolute;width:1px;height:1px;opacity:0}
+.mc-chips label span{display:flex;align-items:center;justify-content:center;min-height:48px;height:100%;padding:8px 14px;text-align:center;font-size:15px;line-height:1.25;color:var(--text);background:var(--surface);border:2px solid var(--line);border-radius:12px;cursor:pointer;transition:border-color .2s,background .2s}
+.mc-chips label span:hover{border-color:var(--gold)}
+.mc-chips input:checked+span{background:var(--gold);border-color:var(--gold);color:var(--on-gold);font-weight:600}
+.mc-chips input:focus-visible+span{outline:3px solid var(--gold-2);outline-offset:3px}
+.mc-chips strong{margin-left:6px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mc-res-brand{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--line);font-weight:700;font-size:18px;line-height:1.2;color:var(--gold)}
+#mc-app .mc-res-brand img{flex:0 0 52px;width:52px;height:52px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.mc-res-brand small{display:block;margin-top:4px;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mc-stat{font-size:14px;color:var(--muted);min-height:22px;margin:-12px 0 18px}
+
+
+
+@media(max-width:860px){
+  .mc-calc{grid-template-columns:1fr}
+  .mc-res{position:static;padding:24px}
+}
+
+html,body{margin:0;background:#03201f}
+#mc-app{min-height:100vh;padding:40px 0 56px}
+.mc-head{margin-bottom:30px}
+.mc-brand{display:flex;align-items:center;gap:14px;margin:0 0 20px;font-size:18px;font-weight:700;line-height:1.2;color:var(--gold)}
+#mc-app .mc-brand img{flex:0 0 52px;width:52px;height:52px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.mc-brand small{display:block;margin-top:4px;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mc-h1{font-size:clamp(32px,6vw,56px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 12px}
+.mc-ret{margin-top:12px;font-size:13px;color:var(--muted)}
+@media(max-width:860px){#mc-app{padding:24px 0 max(32px,env(safe-area-inset-bottom))}.mc-wrap{padding:0 14px}.mc-head{margin-bottom:18px}}
+</style>
+<script defer src="https://st.max.ru/js/max-web-app.js"></script>
+</head>
+<body>
+<main id="mc-app">
+<div class="mc-wrap">
+  <header class="mc-head">
+    <p class="mc-brand"><img src="data:image/jpeg;base64,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" alt="Логотип Анастасии Зыряновой" width="52" height="52"><span>Анастасия Зырянова<small>Недвижимость</small></span></p>
+    <h1 class="mc-h1">Ипотечный калькулятор</h1>
+    <p class="mc-lead" style="margin-bottom:0">Рассчитайте ежемесячный платёж по своим условиям.</p>
+  </header>
+  <div class="mc-calc">
+      <div>
+        <div class="mc-field"><div class="mc-row"><label for="mc-price">Стоимость недвижимости, ₽</label></div>
+          <input class="mc-in" id="mc-price" inputmode="numeric" autocomplete="off" maxlength="16" value="8 000 000"><input type="range" id="mc-price-r" min="0" max="40000000" step="100000" value="8000000" aria-label="Стоимость недвижимости">
+          <div class="mc-bnd"><span>0 ₽</span><span>40 млн ₽</span></div></div>
+        <div class="mc-field"><div class="mc-row"><label for="mc-down">Первоначальный взнос, ₽</label><small id="mc-pct">20% от стоимости</small></div>
+          <input class="mc-in" id="mc-down" inputmode="numeric" autocomplete="off" maxlength="16" value="1 600 000"><input type="range" id="mc-down-r" min="0" max="100" step="1" value="20" aria-label="Первоначальный взнос в процентах от стоимости">
+          <div class="mc-bnd"><span>0%</span><span>100%</span></div></div>
+        <div class="mc-field"><div class="mc-row"><label for="mc-term">Срок ипотеки, лет</label></div>
+          <input class="mc-in" id="mc-term" inputmode="numeric" autocomplete="off" maxlength="2" value="20"><input type="range" id="mc-term-r" min="1" max="30" step="1" value="20" aria-label="Срок ипотеки в годах">
+          <div class="mc-bnd"><span>1 год</span><span>30 лет</span></div></div>
+        <div class="mc-prog" role="group" aria-labelledby="mc-prog-t">
+          <div class="mc-prog-t" id="mc-prog-t">Программа ипотеки</div>
+          <div class="mc-chips">
+            <label><input type="radio" name="mc-plan" value="family" checked><span>Семейная</span></label>
+            <label><input type="radio" name="mc-plan" value="standard"><span>Стандартная</span></label>
+            <label><input type="radio" name="mc-plan" value="custom"><span>Своя ставка</span></label>
+          </div>
+          <div class="mc-chips mc-sub" id="mc-family" role="group" aria-label="Ставка по количеству детей">
+            <label><input type="radio" name="mc-preset" value="10" data-l="1 ребёнок"><span>1 ребёнок <strong>10%</strong></span></label>
+            <label><input type="radio" name="mc-preset" value="8" data-l="2 ребёнка"><span>2 ребёнка <strong>8%</strong></span></label>
+            <label><input type="radio" name="mc-preset" value="6" data-l="3 ребёнка"><span>3 ребёнка <strong>6%</strong></span></label>
+            <label><input type="radio" name="mc-preset" value="4" data-l="4 ребёнка"><span>4 ребёнка <strong>4%</strong></span></label>
+            <label><input type="radio" name="mc-preset" value="2" data-l="5 и более детей"><span>5 и более детей <strong>2%</strong></span></label>
+          </div>
+          <div class="mc-sub" id="mc-standard" hidden>
+            <div class="mc-chips" role="group" aria-label="Вариант стандартной ипотеки">
+              <label><input type="radio" name="mc-variant" value="subsidized"><span>Субсидированная</span></label>
+              <label><input type="radio" name="mc-variant" value="regular"><span>Обычная <strong>19,5%</strong></span></label>
+            </div>
+            <div class="mc-chips mc-sub" id="mc-subs" role="group" aria-label="Субсидированная ставка" hidden>
+              <label><input type="radio" name="mc-preset" value="14.5"><span>14,5%</span></label>
+              <label><input type="radio" name="mc-preset" value="13.9"><span>13,9%</span></label>
+              <label><input type="radio" name="mc-preset" value="12.65"><span>12,65%</span></label>
+              <label><input type="radio" name="mc-preset" value="10.5"><span>10,5%</span></label>
+            </div>
+          </div>
+          <div class="mc-sub" id="mc-custom" hidden>
+            <div class="mc-field" style="margin-bottom:0"><div class="mc-row"><label for="mc-rate">Годовая ставка, %</label></div>
+              <input class="mc-in" id="mc-rate" inputmode="decimal" autocomplete="off" maxlength="7" placeholder="Введите ставку"><input type="range" id="mc-rate-r" min="0" max="40" step="0.1" value="0" aria-label="Годовая ставка в процентах">
+              <div class="mc-bnd"><span>0%</span><span>40%</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="mc-res" aria-live="polite">
+                <div class="l">Примерный ежемесячный платёж</div>
+        <div class="mc-pay" id="mc-pay">—</div>
+        <div class="mc-stat" id="mc-stat">Выберите ставку, чтобы увидеть расчёт.</div>
+        <div class="mc-bar"><i id="mc-bar" style="width:0"></i></div>
+        <div class="mc-leg"><span>Основной долг</span><span>Проценты</span></div>
+        <div class="mc-sum"><span>Ставка</span><b id="mc-rt">—</b></div>
+        <div class="mc-sum"><span>Сумма кредита</span><b id="mc-loan">—</b></div>
+        <div class="mc-sum"><span>Переплата по процентам</span><b id="mc-over">—</b></div>
+        <div class="mc-sum"><span>Всего выплатите</span><b id="mc-total">—</b></div>
+        <button type="button" class="mc-btn" id="mc-send" hidden disabled style="margin-top:20px">Отправить расчёт в бот</button>
+        <p class="mc-ret" id="mc-return" hidden>Чтобы оставить заявку, закройте калькулятор и нажмите «Продолжить анкету» в чате.</p>
+      </div>
+    </div>
+    
+  <p class="mc-note">Расчёт ориентировочный и не является окончательным решением по ипотеке. Платежи считаются равными долями (аннуитет), без страховки и комиссий. Итоговую ставку, платёж и условия определяет банк. Анастасия поможет сравнить предложения и подобрать условия с учётом вашего бюджета и ситуации.</p>
+</div>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var nf=new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0});
+  var fm=function(n){return nf.format(Math.round(n)).replace(/[\u00a0\u202f]/g,' ')};
+  var rub=function(n){return fm(n)+' ₽'};
+  var inp={price:$('mc-price'),down:$('mc-down'),term:$('mc-term'),rate:$('mc-rate')};
+  var sl={price:$('mc-price-r'),down:$('mc-down-r'),term:$('mc-term-r'),rate:$('mc-rate-r')};
+  var root=$('mc-app'),maxYears=+sl.term.max,last=null;
+  var presets=root.querySelectorAll('input[name="mc-preset"]');
+  var variants=root.querySelectorAll('input[name="mc-variant"]');
+  var plans=root.querySelectorAll('input[name="mc-plan"]');
+  var onResult=function(){};
+  var money=function(t){var d=String(t).replace(/\s/g,'');return /^\d{1,12}$/.test(d)?Number(d):NaN};
+  var pct=function(x){return String(x).replace('.',',')+'%'};
+  function annuity(P,rate,years){var n=years*12,m=rate/1200;return m===0?P/n:P*m/-Math.expm1(-n*Math.log1p(m))}
+  function programName(){
+    var p=root.querySelector('input[name="mc-plan"]:checked').value;
+    var c=root.querySelector('input[name="mc-preset"]:checked');
+    var v=root.querySelector('input[name="mc-variant"]:checked');
+    if(p==='family')return c?'Семейная, '+c.getAttribute('data-l'):'Семейная';
+    if(p==='standard')return v?(v.value==='subsidized'?'Стандартная, субсидированная':'Стандартная, обычная'):'Стандартная';
+    return 'Своя ставка';
+  }
+  function render(){
+    var price=money(inp.price.value),down=money(inp.down.value);
+    var yt=inp.term.value.trim(),years=/^\d{1,2}$/.test(yt)?Number(yt):NaN;
+    var rt=inp.rate.value.trim().replace(',','.'),rate=/^\d{1,3}(\.\d{1,3})?$/.test(rt)?Number(rt):NaN;
+    var amountsOk=price>0&&down>=0&&down<price;
+    var share=price>0&&down>=0?100*down/price:NaN;
+    $('mc-pct').textContent=isFinite(share)?fm(share)+'% от стоимости':'';
+    if(isFinite(price))sl.price.value=price;
+    if(isFinite(share))sl.down.value=share;
+    if(isFinite(years))sl.term.value=years;
+    if(isFinite(rate))sl.rate.value=rate;
+    var msg='';
+    if(!(price>0))msg='Введите стоимость недвижимости в рублях.';
+    else if(!(down>=0))msg='Введите первоначальный взнос в рублях.';
+    else if(down>=price)msg='Взнос должен быть меньше стоимости недвижимости.';
+    else if(!(years>=1&&years<=maxYears))msg='Укажите срок от 1 до '+maxYears+' лет.';
+    else if(!rt)msg='Выберите ставку, чтобы увидеть расчёт.';
+    else if(!(rate>=0&&rate<=100))msg='Укажите годовую ставку от 0 до 100%.';
+    var loan=amountsOk?price-down:NaN;
+    var pay=msg?NaN:annuity(loan,rate,years),ok=isFinite(pay);
+    var tot=ok?pay*years*12:NaN,over=ok?Math.max(tot-loan,0):NaN;
+    $('mc-stat').textContent=msg||'При выбранной ставке и сроке';
+    $('mc-pay').textContent=ok?rub(pay)+' / мес':'—';
+    $('mc-bar').style.width=ok?(loan/tot*100)+'%':'0';
+    $('mc-rt').textContent=(rt&&isFinite(rate))?pct(rate):'—';
+    $('mc-loan').textContent=amountsOk?rub(loan):'—';
+    $('mc-over').textContent=ok?rub(over):'—';
+    $('mc-total').textContent=ok?rub(tot):'—';
+    last=ok?{price:price,down:down,term:years,rate:rate,loan:loan,payment:Math.round(pay),overpay:Math.round(over),program:programName()}:null;
+    onResult(last);
+  }
+  ['price','down','term','rate'].forEach(function(k){inp[k].addEventListener('input',render)});
+  ['price','down'].forEach(function(k){inp[k].addEventListener('blur',function(){var v=money(inp[k].value);if(isFinite(v))inp[k].value=fm(v)})});
+  sl.price.addEventListener('input',function(){inp.price.value=fm(+sl.price.value);render()});
+  sl.down.addEventListener('input',function(){var p=money(inp.price.value);if(p>0)inp.down.value=fm(Math.round(p*sl.down.value/100));render()});
+  sl.term.addEventListener('input',function(){inp.term.value=String(sl.term.value);render()});
+  sl.rate.addEventListener('input',function(){inp.rate.value=String(sl.rate.value).replace('.',',');render()});
+  function uncheck(list){Array.prototype.forEach.call(list,function(x){x.checked=false})}
+  function setRate(v){inp.rate.value=v.replace('.',',');render()}
+  Array.prototype.forEach.call(plans,function(b){b.addEventListener('change',function(){
+    $('mc-family').hidden=b.value!=='family';$('mc-standard').hidden=b.value!=='standard';$('mc-custom').hidden=b.value!=='custom';
+    $('mc-subs').hidden=true;uncheck(presets);uncheck(variants);setRate('');
+  })});
+  Array.prototype.forEach.call(variants,function(b){b.addEventListener('change',function(){
+    var sub=b.value==='subsidized';$('mc-subs').hidden=!sub;uncheck(presets);setRate(sub?'':'19.5');
+  })});
+  Array.prototype.forEach.call(presets,function(b){b.addEventListener('change',function(){setRate(b.value)})});
+
+  var sendBtn=$('mc-send'),ret=$('mc-return'),context=null,payload='';
+  onResult=function(result){
+    payload=(result&&context)?['azret',context[1],result.price,result.down,result.term,Math.round(result.rate*1000)].join('_'):'';
+    sendBtn.disabled=!payload;
+  };
+  function applyMax(){
+    var app=window.WebApp;
+    if(!app||!app.initData)return;
+    var param=(app.initDataUnsafe&&app.initDataUnsafe.start_param)||'';
+    context=/^azcalc_([0-9a-f]{16})_(zero|range)_([A-Za-z0-9_]{3,128})$/.exec(param);
+    var can=!!(context&&typeof app.openMaxLink==='function');
+    if(can&&context[2]==='zero')inp.down.value='0';
+    sendBtn.hidden=!can;
+    ret.hidden=can;
+    if(typeof app.ready==='function')app.ready();
+    render();
+  }
+  sendBtn.addEventListener('click',function(){
+    if(payload&&context)window.WebApp.openMaxLink('https://max.ru/'+context[3]+'?start='+payload);
+  });
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applyMax,{once:true});
+  else applyMax();
+
+  render();
+})();
+</script>
+</body>
+</html>
